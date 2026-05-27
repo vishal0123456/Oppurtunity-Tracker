@@ -9,8 +9,8 @@ class Settings(BaseSettings):
     # Database
     DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/opportunity_tracker"
 
-    # OpenAI
-    OPENAI_API_KEY: str = ""
+    # Gemini (Google AI Studio — free tier)
+    GEMINI_API_KEY: str = ""
 
     # App
     APP_ENV: str = "development"

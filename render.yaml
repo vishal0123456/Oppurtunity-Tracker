@@ -1,0 +1,35 @@
+services:
+  # Backend API
+  - type: web
+    name: opportunity-tracker-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    envVars:
+      - key: DATABASE_URL
+        sync: false          # Set manually in Render dashboard
+      - key: GEMINI_API_KEY
+        sync: false          # Set manually in Render dashboard
+      - key: APP_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+      - key: ALLOWED_ORIGINS
+        sync: false          # Set to your Vercel frontend URL
+      - key: PIPELINE_RUN_HOUR
+        value: "6"
+      - key: PIPELINE_RUN_MINUTE
+        value: "0"
+    healthCheckPath: /health
+    autoDeploy: true
+
+  # Frontend (static export alternative — use Vercel for Next.js)
+  # Uncomment if deploying frontend on Render instead of Vercel
+  # - type: web
+  #   name: opportunity-tracker-frontend
+  #   runtime: docker
+  #   dockerfilePath: ./frontend/Dockerfile
+  #   dockerContext: ./frontend
+  #   envVars:
+  #     - key: NEXT_PUBLIC_API_URL
+  #       sync: false

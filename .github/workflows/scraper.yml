@@ -1,0 +1,47 @@
+name: Daily Opportunity Scraper
+
+on:
+  schedule:
+    - cron: '0 6 * * *'   # 6 AM UTC every day
+  workflow_dispatch:        # Allow manual trigger from GitHub UI
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: backend/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r backend/requirements.txt
+
+      - name: Run database migrations
+        run: alembic upgrade head
+        working-directory: backend
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      - name: Run opportunity discovery pipeline
+        run: python -m app.pipeline.runner
+        working-directory: backend
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          APP_ENV: production
+          LOG_LEVEL: INFO
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "::error::Pipeline failed! Check the logs above for details."
+          echo "Failed at: $(date -u)"
