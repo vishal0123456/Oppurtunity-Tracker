@@ -46,25 +46,14 @@ def is_scraping_allowed(url: str) -> bool:
 
 
 class BaseScraper(ABC):
-    """
-    Base class for all opportunity scrapers.
-
-    Responsibilities:
-    - fetch_listing_urls(): return a list of opportunity page URLs
-    - fetch_page_text(): return clean text from a single opportunity page
-
-    Scrapers do NOT parse or extract structured data — that's the AI layer's job.
-    """
+    """Base class for all opportunity scrapers."""
 
     source_name: str = "unknown"
     base_url: str = ""
 
     @abstractmethod
     async def fetch_listing_urls(self) -> List[str]:
-        """
-        Fetch the listing/index page and return a list of individual opportunity URLs.
-        Should return an empty list on failure (never raise).
-        """
+        """Return a list of individual opportunity URLs from the listing page."""
         ...
 
     async def fetch_page_text(self, url: str) -> Optional[str]:

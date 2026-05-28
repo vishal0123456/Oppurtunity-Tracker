@@ -95,11 +95,11 @@ export async function updateApplication(
     id: string,
     data: Partial<{
         status: string;
-        notes: string;
+        notes: string | null;
         priority: number;
-        applied_at: string;
-        reminder_date: string;
-        document_links: string;
+        applied_at: string | null;
+        reminder_date: string | null;
+        document_links: string | null;
     }>
 ): Promise<Application> {
     return apiFetch<Application>(`/applications/${id}`, {

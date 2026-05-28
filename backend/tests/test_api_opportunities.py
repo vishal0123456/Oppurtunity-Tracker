@@ -177,7 +177,7 @@ async def test_patch_opportunity(client):
     data = patch_resp.json()
     assert data["title"] == "Updated Title"
     assert data["funding_amount"] == "$50,000"
-    # Other fields unchanged
+   
     assert data["category"] == "scholarship"
 
 

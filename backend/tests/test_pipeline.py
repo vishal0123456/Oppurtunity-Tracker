@@ -8,7 +8,7 @@ from app.pipeline.deduplicator import normalize_text, is_duplicate
 from app.ai.categorizer import normalize_category, enrich_tags, normalize_extracted_data
 
 
-# ── Deduplicator tests ────────────────────────────────────────────────────────
+# ── Deduplicator tests ──
 
 class TestNormalizeText:
     def test_lowercases(self):
@@ -71,7 +71,7 @@ async def test_is_duplicate_fuzzy_title(db_session):
     db_session.add(opp)
     await db_session.flush()
 
-    # Same title, different URL — should be caught by fuzzy match
+    
     result = await is_duplicate(
         db_session,
         "https://example.com/fulbright-repost",
@@ -81,7 +81,7 @@ async def test_is_duplicate_fuzzy_title(db_session):
     assert result is True
 
 
-# ── Categorizer tests ─────────────────────────────────────────────────────────
+# ── Categorizer tests ───
 
 class TestNormalizeCategory:
     def test_valid_category(self):
@@ -228,7 +228,7 @@ class TestNormalizeExtractedData:
     def test_non_list_arrays_become_empty(self):
         data = {
             "category": "grant",
-            "tags": "AI, Startup",  # string instead of list
+            "tags": "AI, Startup", 
             "country": None,
         }
         result = normalize_extracted_data(data)

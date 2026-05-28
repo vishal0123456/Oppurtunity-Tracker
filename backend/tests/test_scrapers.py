@@ -14,7 +14,7 @@ from app.scraper.rss_scraper import RSSFeedScraper
 from app.scraper import get_all_scrapers
 
 
-# ── is_scraping_allowed ───────────────────────────────────────────────────────
+
 
 def test_scraping_allowed_returns_true_on_error():
     """If robots.txt is unreachable, scraping is allowed by default."""
@@ -44,7 +44,7 @@ def test_scraping_allowed_respects_allow():
         assert result is True
 
 
-# ── BaseScraper._extract_text ─────────────────────────────────────────────────
+
 
 class ConcreteScraper(BaseScraper):
     """Minimal concrete implementation for testing BaseScraper."""
@@ -101,7 +101,6 @@ async def test_fetch_page_text_returns_none_on_timeout():
     assert result is None
 
 
-# ── OpportunityDeskScraper ────────────────────────────────────────────────────
 
 def test_opportunity_desk_parse_listing_articles():
     """Parses article links from OpportunityDesk HTML."""
@@ -141,7 +140,7 @@ def test_opportunity_desk_parse_listing_empty():
     assert isinstance(urls, list)
 
 
-# ── YouthOpportunitiesScraper ─────────────────────────────────────────────────
+# ── YouthOpportunitiesScraper ──
 
 def test_youth_opportunities_parse_listing():
     """Parses youthop.com opportunity links."""
@@ -168,7 +167,7 @@ def test_youth_opportunities_handles_relative_urls():
     assert any(u.startswith("https://youthop.com") for u in urls)
 
 
-# ── RSSFeedScraper ────────────────────────────────────────────────────────────
+# ── RSSFeedScraper ───
 
 @pytest.mark.asyncio
 async def test_rss_scraper_handles_bad_feed():
@@ -197,7 +196,7 @@ async def test_rss_scraper_extracts_entry_links():
     assert "https://example.com/article-2" in urls
 
 
-# ── get_all_scrapers ──────────────────────────────────────────────────────────
+# ── get_all_scrapers ──
 
 def test_get_all_scrapers_returns_list():
     """get_all_scrapers returns a non-empty list of scraper instances."""

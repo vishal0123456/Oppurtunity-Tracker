@@ -92,7 +92,7 @@ class TestFallbackHeuristics:
 async def test_extract_opportunity_uses_fallback_on_llm_failure():
     """When Gemini fails, extract_opportunity falls back to heuristics."""
     with patch("app.ai.extractor.extract_opportunity_with_llm", new_callable=AsyncMock) as mock_llm:
-        mock_llm.return_value = None  # Simulate LLM failure
+        mock_llm.return_value = None  
 
         text = "This scholarship is open to Indian students studying abroad."
         result = await extract_opportunity(text, "https://example.com/test")
@@ -126,7 +126,7 @@ async def test_extract_opportunity_uses_llm_result_when_available():
     with patch("app.ai.extractor.extract_opportunity_with_llm", new_callable=AsyncMock) as mock_llm:
         mock_llm.return_value = mock_result
 
-        # Use text long enough to pass the 100-char minimum check
+
         long_text = "This is a fellowship opportunity page with detailed information about eligibility and funding. " * 3
         result = await extract_opportunity(long_text, "https://example.com/llm-test")
 
@@ -139,6 +139,6 @@ async def test_extract_opportunity_skips_short_text():
     """Very short text skips LLM and uses fallback directly."""
     with patch("app.ai.extractor.extract_opportunity_with_llm", new_callable=AsyncMock) as mock_llm:
         result = await extract_opportunity("Hi", "https://example.com/short")
-        # LLM should not be called for very short text
+       
         mock_llm.assert_not_called()
         assert isinstance(result, dict)

@@ -6,7 +6,7 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 from alembic import context
 
-# Import models so Alembic can detect schema changes
+# Import models 
 from app.database import Base
 from app.models import opportunity, application  # noqa: F401
 
@@ -15,10 +15,10 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# Override sqlalchemy.url from DATABASE_URL env var (works locally and in CI)
+
 db_url = os.environ.get("DATABASE_URL")
 if db_url:
-    # Alembic needs asyncpg driver; ensure correct prefix
+  
     if db_url.startswith("postgres://"):
         db_url = db_url.replace("postgres://", "postgresql+asyncpg://", 1)
     elif db_url.startswith("postgresql://") and "+asyncpg" not in db_url:

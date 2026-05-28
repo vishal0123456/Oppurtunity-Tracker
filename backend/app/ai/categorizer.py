@@ -20,7 +20,6 @@ VALID_TAGS = {
     "Finance", "Arts", "Sports", "Leadership", "Government"
 }
 
-# Keyword → tag mapping for rule-based enrichment
 TAG_KEYWORD_MAP = {
     "AI": ["artificial intelligence", "machine learning", "deep learning", "nlp", "ai startup", "llm"],
     "Startup": ["startup", "entrepreneur", "venture", "founder", "early-stage"],
@@ -61,13 +60,11 @@ def enrich_tags(extracted_data: dict) -> List[str]:
     Combine LLM-extracted tags with rule-based keyword matching.
     Returns a deduplicated, validated list of tags.
     """
-    # Start with LLM tags (already validated against VALID_TAGS)
     llm_tags = set()
     for tag in (extracted_data.get("tags") or []):
         if tag in VALID_TAGS:
             llm_tags.add(tag)
 
-    # Build searchable text from all text fields
     searchable = " ".join(filter(None, [
         extracted_data.get("title", ""),
         extracted_data.get("description", ""),
@@ -76,13 +73,11 @@ def enrich_tags(extracted_data: dict) -> List[str]:
         extracted_data.get("category", ""),
     ])).lower()
 
-    # Rule-based tag enrichment
     rule_tags = set()
     for tag, keywords in TAG_KEYWORD_MAP.items():
         if any(kw in searchable for kw in keywords):
             rule_tags.add(tag)
 
-    # Add category-based tags
     category = extracted_data.get("category", "")
     category_tag_map = {
         "scholarship": "Scholarship",
@@ -94,7 +89,6 @@ def enrich_tags(extracted_data: dict) -> List[str]:
     if category in category_tag_map:
         rule_tags.add(category_tag_map[category])
 
-    # Add eligibility-based tags
     if extracted_data.get("women_friendly"):
         rule_tags.add("Women")
     if extracted_data.get("student_eligible"):
@@ -110,18 +104,13 @@ def normalize_extracted_data(data: dict) -> dict:
     Normalize and validate all fields from the extraction result.
     Ensures types are correct before DB insertion.
     """
-    # Normalize category
     data["category"] = normalize_category(data.get("category", ""))
-
-    # Enrich tags
     data["tags"] = enrich_tags(data)
 
-    # Ensure arrays are lists
     for field in ["country", "tags"]:
         if not isinstance(data.get(field), list):
             data[field] = []
 
-    # Normalize booleans
     for field in ["is_remote", "women_friendly", "india_eligible", "student_eligible"]:
         val = data.get(field)
         if isinstance(val, str):
@@ -129,7 +118,5 @@ def normalize_extracted_data(data: dict) -> dict:
         elif val is None:
             data[field] = False
 
-    # Clean up internal fields
     data.pop("_extraction_method", None)
-
     return data

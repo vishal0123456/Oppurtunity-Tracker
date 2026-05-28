@@ -196,7 +196,6 @@ async def run_pipeline(max_per_scraper: int = 30) -> dict:
 
 
 if __name__ == "__main__":
-    """Allow running the pipeline directly: python -m app.pipeline.runner"""
     import sys
     import os
     sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(__file__))))

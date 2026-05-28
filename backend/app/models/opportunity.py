@@ -1,8 +1,5 @@
 """
-Opportunity ORM model.
-
-Uses PostgreSQL ARRAY for tags/country (matches the existing DB schema).
-For tests (SQLite), the conftest overrides these with JSON columns.
+Opportunity ORM model — represents a single discovered opportunity.
 """
 import uuid
 from datetime import datetime

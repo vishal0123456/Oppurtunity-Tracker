@@ -75,7 +75,7 @@ SEED_OPPORTUNITIES = [
         "source_name": "DAAD",
         "deadline": "2026-09-30",
     },
-    # ── Fellowships ───────────────────────────────────────────────────────────
+    # ── Fellowships ─
     {
         "title": "Obama Foundation Scholars Program 2026",
         "organization": "Obama Foundation",
@@ -131,7 +131,7 @@ SEED_OPPORTUNITIES = [
         "source_name": "Atlantic Fellows",
         "deadline": "2026-11-15",
     },
-    # ── Accelerators ──────────────────────────────────────────────────────────
+    # ── Accelerators ──
     {
         "title": "Y Combinator W2027 Batch",
         "organization": "Y Combinator",
@@ -186,7 +186,7 @@ SEED_OPPORTUNITIES = [
         "source_name": "Antler",
         "deadline": "2026-12-31",
     },
-    # ── Grants ────────────────────────────────────────────────────────────────
+    # ── Grants ──
     {
         "title": "Bill & Melinda Gates Foundation Grand Challenges",
         "organization": "Bill & Melinda Gates Foundation",
@@ -241,7 +241,7 @@ SEED_OPPORTUNITIES = [
         "source_name": "Startup India",
         "deadline": "2026-12-31",
     },
-    # ── Competitions ──────────────────────────────────────────────────────────
+    # ── Competitions ────
     {
         "title": "MIT Solve Global Challenges 2026",
         "organization": "MIT",
@@ -278,7 +278,7 @@ SEED_OPPORTUNITIES = [
         "source_name": "HackerEarth",
         "deadline": "2026-09-01",
     },
-    # ── Exchange Programs ─────────────────────────────────────────────────────
+    # ── Exchange Programs ───
     {
         "title": "AIESEC Global Volunteer Program",
         "organization": "AIESEC",
@@ -316,7 +316,7 @@ SEED_OPPORTUNITIES = [
         "source_name": "DAAD India",
         "deadline": "2026-11-30",
     },
-    # ── Travel Programs ───────────────────────────────────────────────────────
+    # ── Travel Programs ─
     {
         "title": "Atlas Corps Fellowship",
         "organization": "Atlas Corps",
@@ -336,7 +336,7 @@ SEED_OPPORTUNITIES = [
         "source_name": "Atlas Corps",
         "deadline": "2026-10-01",
     },
-    # ── VC Programs ───────────────────────────────────────────────────────────
+    # ── VC Programs ────
     {
         "title": "Sequoia Surge — Southeast Asia & India",
         "organization": "Sequoia Capital",
@@ -355,7 +355,7 @@ SEED_OPPORTUNITIES = [
         "source_name": "Sequoia Surge",
         "deadline": "2026-11-01",
     },
-    # ── Conferences ───────────────────────────────────────────────────────────
+    # ── Conferences ────
     {
         "title": "Grace Hopper Celebration 2026 — Scholarship",
         "organization": "AnitaB.org",
@@ -374,7 +374,7 @@ SEED_OPPORTUNITIES = [
         "source_name": "AnitaB.org",
         "deadline": "2026-07-31",
     },
-    # ── Giveaways ─────────────────────────────────────────────────────────────
+    # ── Giveaways ─────
     {
         "title": "AWS Activate — Startup Credits Program",
         "organization": "Amazon Web Services",
@@ -411,7 +411,7 @@ SEED_OPPORTUNITIES = [
         "source_name": "Google Cloud",
         "deadline": "2026-12-31",
     },
-    # ── Research ──────────────────────────────────────────────────────────────
+    # ── Research ────
     {
         "title": "DST-INSPIRE Fellowship for PhD",
         "organization": "Department of Science & Technology, India",
@@ -449,7 +449,7 @@ SEED_OPPORTUNITIES = [
         "source_name": "Microsoft Research",
         "deadline": "2026-09-15",
     },
-    # ── Climate ───────────────────────────────────────────────────────────────
+    # ── Climate ───
     {
         "title": "Climate Launchpad — Green Business Ideas Competition",
         "organization": "EIT Climate-KIC",
@@ -513,7 +513,7 @@ async def seed():
     """Insert new seed opportunities, skipping any that already exist by URL."""
     await init_db()
 
-    # First reset all expired records and update deadlines
+    #  reseting all expired records and updating deadlines
     await reset_expired_and_update_deadlines()
 
     async with AsyncSessionLocal() as db:

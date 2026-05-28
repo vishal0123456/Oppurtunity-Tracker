@@ -20,7 +20,6 @@ from app.config import settings
 
 logger = logging.getLogger(__name__)
 
-# Configure Gemini client once at module load
 genai.configure(api_key=settings.GEMINI_API_KEY)
 _model = genai.GenerativeModel(
     model_name="gemini-2.0-flash",
@@ -74,11 +73,10 @@ async def extract_opportunity_with_llm(raw_text: str) -> Optional[dict]:
 
         raw_json = response.text.strip()
 
-        # Strip markdown fences if Gemini adds them despite the mime type
+
         if raw_json.startswith("```"):
             raw_json = re.sub(r"^```(?:json)?\n?", "", raw_json)
             raw_json = re.sub(r"\n?```$", "", raw_json)
-
         data = json.loads(raw_json)
         logger.debug(f"Gemini extraction succeeded: {data.get('title', 'unknown')}")
         return data
@@ -96,7 +94,6 @@ def extract_with_fallback_heuristics(raw_text: str, url: str) -> dict:
     Regex/heuristic fallback when LLM extraction fails.
     Extracts minimal fields to still create a useful record.
     """
-    # Guard against None input
     if not raw_text:
         return {
             "title": "Unknown Opportunity",

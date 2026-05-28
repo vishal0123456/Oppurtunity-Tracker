@@ -52,7 +52,6 @@ app = FastAPI(
     lifespan=lifespan,
     docs_url="/docs",
     redoc_url="/redoc",
-    debug=True,
 )
 
 # CORS — allow frontend origins
